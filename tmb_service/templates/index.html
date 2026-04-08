@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Bienvenue chez <span class="highlight">TMB SERVICE</span></h1>
+                <p>Des services professionnels de qualité pour tous vos besoins</p>
+                <div class="hero-buttons">
+                    <a href="{% url 'services' %}" class="btn-primary">Nos services</a>
+                    <a href="{% url 'galerie' %}" class="btn-secondary">Voir la galerie</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Nos catégories de services</h2>
+            <div class="categories-grid">
+                {% for category in categories %}
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <h3>{{ category.nom }}</h3>
+                        <p>{{ category.description|truncatewords:15 }}</p>
+                        <a href="{% url 'galerie' %}?categorie={{ category.id }}" class="category-link">Voir les modèles →</a>
+                    </div>
+                {% empty %}
+                    <p>Aucune catégorie disponible pour le moment.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Models Section -->
+    <section class="recent-models">
+        <div class="container">
+            <h2 class="section-title">Modèles récents</h2>
+            <div class="models-grid">
+                {% for modele in recent_modeles %}
+                    <div class="model-card">
+                        {% if modele.image %}
+                            <img src="{{ modele.image.url }}" alt="{{ modele.titre }}">
+                        {% else %}
+                            <img src="{% static 'images/placeholder.jpg' %}" alt="Image par défaut">
+                        {% endif %}
+                        <div class="model-info">
+                            <h3>{{ modele.titre }}</h3>
+                            <p>{{ modele.description|truncatewords:20 }}</p>
+                            <div class="model-stats">
+                                <span><i class="fas fa-heart"></i> {{ modele.likes_count }}</span>
+                                <span><i class="fas fa-comment"></i> {{ modele.comments_count }}</span>
+                            </div>
+                            <a href="{% url 'modele_detail' modele.id %}" class="btn-detail">Voir détails</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>Aucun modèle disponible pour le moment.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Prêt à collaborer avec nous ?</h2>
+                <p>Contactez-nous dès aujourd'hui pour discuter de votre projet</p>
+                <a href="{% url 'contact' %}" class="btn-primary">Nous contacter</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

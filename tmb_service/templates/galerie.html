@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Galerie{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div class="container">
+            <h1>Galerie</h1>
+            <p>Explorez nos modèles et trouvez l'inspiration</p>
+        </div>
+    </div>
+
+    <section class="gallery-filters">
+        <div class="container">
+            <div class="filters-container">
+                <a href="{% url 'galerie' %}" class="filter-btn {% if not request.GET.categorie and not request.GET.service %}active{% endif %}">Tous</a>
+                {% for category in categories %}
+                    <a href="?categorie={{ category.id }}" class="filter-btn {% if request.GET.categorie == category.id|stringformat:'s' %}active{% endif %}">
+                        {{ category.nom }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery-grid-section">
+        <div class="container">
+            <div class="models-grid">
+                {% for modele in modeles %}
+                    <div class="model-card">
+                        {% if modele.image %}
+                            <img src="{{ modele.image.url }}" alt="{{ modele.titre }}">
+                        {% else %}
+                            <img src="{% static 'images/placeholder.jpg' %}" alt="Image par défaut">
+                        {% endif %}
+                        <div class="model-info">
+                            <h3>{{ modele.titre }}</h3>
+                            <p class="model-service">{{ modele.service.nom }}</p>
+                            <p>{{ modele.description|truncatewords:15 }}</p>
+                            <div class="model-stats">
+                                <span><i class="fas fa-heart"></i> {{ modele.likes_count }}</span>
+                                <span><i class="fas fa-comment"></i> {{ modele.comments_count }}</span>
+                            </div>
+                            <a href="{% url 'modele_detail' modele.id %}" class="btn-detail">Voir détails</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="no-results">Aucun modèle trouvé dans cette catégorie.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

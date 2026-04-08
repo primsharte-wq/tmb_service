@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div class="container">
+            <h1>Contactez-nous</h1>
+            <p>Nous sommes là pour répondre à vos questions</p>
+        </div>
+    </div>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Informations de contact</h2>
+                    <div class="info-items">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h3>Adresse</h3>
+                                <p>Kinshasa, République Démocratique du Congo</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h3>Téléphone</h3>
+                                <p>+243 848611417</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h3>Email</h3>
+                                <p>tmbservice@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <div>
+                                <h3>WhatsApp</h3>
+                                <p>{{ WHATSAPP_NUMBER }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="whatsapp-cta">
+                        <a href="https://wa.me/{{ WHATSAPP_NUMBER }}?text=Bonjour%20je%20suis%20int%C3%A9ress%C3%A9%20par%20vos%20services" 
+                           class="btn-whatsapp" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Nous contacter sur WhatsApp
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h2>Envoyez-nous un message</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_nom">Nom complet</label>
+                            <input type="text" name="nom" id="id_nom" class="form-control" placeholder="Votre nom et prénom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_telephone">Téléphone</label>
+                            <input type="tel" name="telephone" id="id_telephone" class="form-control" placeholder="+243 XX XXX XXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_contenu">Message</label>
+                            <textarea name="contenu" id="id_contenu" class="form-control" rows="5" placeholder="Décrivez votre projet ou votre demande..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
