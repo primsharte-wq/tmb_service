@@ -10,7 +10,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['*']
 
-# ⚠️ AJOUTEZ CETTE LIGNE POUR DÉTECTER RENDER
+# Détection de l'environnement Render
 ON_RENDER = os.getenv('RENDER') == 'true'
 
 INSTALLED_APPS = [
@@ -90,9 +90,14 @@ TIME_ZONE = 'Africa/Kinshasa'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+# Configuration des fichiers statiques
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Servir les fichiers statiques en production
+if not DEBUG:
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
