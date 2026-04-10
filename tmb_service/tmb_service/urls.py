@@ -8,5 +8,7 @@ urlpatterns = [
     path('', include('tmb_site.urls')),
 ]
 
-if settings.DEBUG:
+# Servir les fichiers statiques et médias en production
+if not settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
