@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Services{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div class="container">
+            <h1>Nos services</h1>
+            <p>Découvrez tous les services que nous proposons</p>
+        </div>
+    </div>
+
+    <section class="services-list">
+        <div class="container">
+            {% for category in categories %}
+                <div class="service-category">
+                    <h2 class="category-title">{{ category.nom }}</h2>
+                    <p class="category-desc">{{ category.description }}</p>
+                    <div class="services-grid">
+                        {% for service in category.services.all %}
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <h3>{{ service.nom }}</h3>
+                                <p>{{ service.description|truncatewords:20 }}</p>
+                                <a href="{% url 'galerie' %}?service={{ service.id }}" class="service-link">
+                                    Voir les modèles →
+                                </a>
+                            </div>
+                        {% empty %}
+                            <p>Aucun service dans cette catégorie pour le moment.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% empty %}
+                <p>Aucune catégorie disponible pour le moment.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

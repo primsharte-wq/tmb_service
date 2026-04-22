@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ modele.titre }}{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div class="container">
+            <h1>{{ modele.titre }}</h1>
+            <p>{{ modele.service.nom }} - {{ modele.service.categorie.nom }}</p>
+        </div>
+    </div>
+
+    <section class="modele-detail">
+        <div class="container">
+            <div class="detail-grid">
+                <div class="modele-image">
+                    {% if modele.image %}
+                        <img src="{{ modele.image.url }}" alt="{{ modele.titre }}">
+                    {% else %}
+                        <img src="{% static 'images/placeholder.jpg' %}" alt="Image par défaut">
+                    {% endif %}
+                </div>
+                <div class="modele-info">
+                    <div class="info-header">
+                        <h2>{{ modele.titre }}</h2>
+                        <div class="action-buttons">
+                            <button class="like-button {% if user_liked %}liked{% endif %}" data-modele-id="{{ modele.id }}">
+                                <i class="fas fa-heart"></i>
+                                <span class="likes-count">{{ modele.likes_count }}</span>
+                            </button>
+                            <button class="comment-toggle" data-target="comment-form">
+                                <i class="fas fa-comment"></i>
+                                <span>{{ modele.comments_count }}</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="info-content">
+                        <h3>Description</h3>
+                        <p>{{ modele.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="comments-section">
+        <div class="container">
+            <h3>Commentaires ({{ commentaires.count }})</h3>
+            
+            {% if user.is_authenticated %}
+                <div class="comment-form-container" id="comment-form">
+                    <h4>Ajouter un commentaire</h4>
+                    <form method="post" action="{% url 'add_comment' modele.id %}">
+                        {% csrf_token %}
+                        {{ comment_form.as_p }}
+                        <button type="submit" class="btn-primary">Envoyer</button>
+                    </form>
+                </div>
+            {% else %}
+                <p class="login-prompt">Veuillez vous <a href="{% url 'login' %}">connecter</a> pour commenter.</p>
+            {% endif %}
+            
+            <div class="comments-list">
+                {% for comment in commentaires %}
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <strong>{{ comment.profil.username }}</strong>
+                            <span class="comment-date">{{ comment.created_at|date:"d/m/Y H:i" }}</span>
+                        </div>
+                        <p>{{ comment.contenu }}</p>
+                    </div>
+                {% empty %}
+                    <p class="no-comments">Aucun commentaire pour le moment.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="message-section">
+        <div class="container">
+            <div class="message-container">
+                <h3>📩 Envoyer un message</h3>
+                <form method="post" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_nom">Nom complet</label>
+                        <input type="text" name="nom" id="id_nom" class="form-control" placeholder="Votre nom et prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_telephone">Téléphone</label>
+                        <input type="tel" name="telephone" id="id_telephone" class="form-control" placeholder="+243 XX XXX XXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_contenu">Votre message</label>
+                        <textarea name="contenu" id="id_contenu" class="form-control" rows="5" placeholder="Décrivez votre projet ou votre demande..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">📤 Envoyer le message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const likeButton = document.querySelector('.like-button');
+        if (likeButton) {
+            likeButton.addEventListener('click', function() {
+                const modeleId = this.dataset.modeleId;
+                fetch(`/like/${modeleId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || '',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.liked) {
+                        this.classList.add('liked');
+                    } else {
+                        this.classList.remove('liked');
+                    }
+                    this.querySelector('.likes-count').textContent = data.likes_count;
+                });
+            });
+        }
+
+        const commentToggle = document.querySelector('.comment-toggle');
+        const commentForm = document.getElementById('comment-form');
+        if (commentToggle && commentForm) {
+            commentToggle.addEventListener('click', function() {
+                commentForm.classList.toggle('show');
+            });
+        }
+    });
+</script>
+{% endblock %}

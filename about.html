@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}À propos de TMB SERVICE{% endblock %}
+
+{% block content %}
+    <!-- Hero Section simplifiée -->
+    <div class="about-hero">
+        <div class="container">
+            <div class="about-hero-content">
+                <h1>Nous créons des solutions <span class="highlight">qui comptent</span></h1>
+                <p>Depuis notre siège à Kinshasa, nous accompagnons les entreprises et les particuliers dans la réalisation de leurs projets digitaux et créatifs.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Notre histoire - version minimaliste -->
+    <section class="story-section">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-text">
+                    <span class="eyebrow">Notre histoire</span>
+                    <h2>Une équipe passionnée au service de votre réussite</h2>
+                    <p>TMB SERVICE est né d'une conviction : offrir des services professionnels de haute qualité, accessibles et adaptés aux réalités africaines. Aujourd'hui, nous sommes fiers d'accompagner nos clients dans leurs projets les plus ambitieux.</p>
+                    <p>Notre approche allie créativité, rigueur technique et écoute attentive. Chaque projet est unique, et nous le traitons comme tel.</p>
+                </div>
+                <div class="story-stats">
+                    <div class="stat-block">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">années d'expertise</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">clients satisfaits</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">projets livrés</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Mission & Vision - cartes pleine largeur -->
+    <section class="mission-vision">
+        <div class="container">
+            <div class="mv-grid">
+                <div class="mv-card mission">
+                    <div class="mv-icon">🎯</div>
+                    <h3>Notre Mission</h3>
+                    <p>Accompagner nos clients dans la réalisation de leurs projets avec excellence, créativité et professionnalisme.</p>
+                </div>
+                <div class="mv-card vision">
+                    <div class="mv-icon">👁️</div>
+                    <h3>Notre Vision</h3>
+                    <p>Devenir une référence incontournable des services professionnels en Afrique, reconnue pour la qualité et l'innovation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Valeurs - design épuré -->
+    <section class="values-premium">
+        <div class="container">
+            <div class="section-header">
+                <span class="eyebrow">Nos valeurs</span>
+                <h2>Ce qui nous guide au quotidien</h2>
+            </div>
+            <div class="values-premium-grid">
+                <div class="value-premium-item">
+                    <div class="value-premium-icon">✨</div>
+                    <h3>Excellence</h3>
+                    <p>Nous ne faisons jamais de compromis sur la qualité.</p>
+                </div>
+                <div class="value-premium-item">
+                    <div class="value-premium-icon">💡</div>
+                    <h3>Innovation</h3>
+                    <p>Nous anticipons les tendances pour vous offrir le meilleur.</p>
+                </div>
+                <div class="value-premium-item">
+                    <div class="value-premium-icon">🤝</div>
+                    <h3>Intégrité</h3>
+                    <p>La transparence et l'honnêteté sont au cœur de nos relations.</p>
+                </div>
+                <div class="value-premium-item">
+                    <div class="value-premium-icon">❤️</div>
+                    <h3>Proximité</h3>
+                    <p>Nous sommes à vos côtés à chaque étape de votre projet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Engagement -->
+    <section class="commitment">
+        <div class="container">
+            <div class="commitment-content">
+                <h2>Notre engagement pour vos données</h2>
+                <p>La protection de vos informations personnelles est notre priorité. Nous respectons les réglementations en vigueur et mettons tout en œuvre pour garantir la confidentialité et la sécurité de vos données.</p>
+                <ul class="commitment-list">
+                    <li>🔒 <span>Données personnelles jamais partagées</span></li>
+                    <li>📧 <span>Communication strictement professionnelle</span></li>
+                    <li>🗑️ <span>Droit à l'effacement sur simple demande</span></li>
+                    <li>🔐 <span>Chiffrement des informations sensibles</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section CTA finale -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="final-cta-content">
+                <h2>Prêt à donner vie à votre projet ?</h2>
+                <p>Discutons de vos idées et voyons comment nous pouvons vous aider à les concrétiser.</p>
+                <a href="{% url 'contact' %}" class="btn-primary">Commencer un projet →</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

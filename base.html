@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMB Service - {% block title %}Accueil{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="{% url 'index' %}">TMB SERVICE</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="{% url 'index' %}">Accueil</a></li>
+                    <li><a href="{% url 'services' %}">Services</a></li>
+                    <li><a href="{% url 'galerie' %}">Galerie</a></li>
+                    <li><a href="{% url 'about' %}">À propos</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-user">
+                            <span>Bonjour, {{ user.username }}</span>
+                        </li>
+                        <li><a href="{% url 'logout' %}" class="btn-logout">Déconnexion</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}" class="btn-login">Connexion</a></li>
+                        <li><a href="{% url 'register' %}" class="btn-register">Inscription</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                    {% if message.tags == 'success' and 'WhatsApp' in message.message %}
+                        <a href="https://wa.me/{{ WHATSAPP_NUMBER }}?text=Bonjour%20je%20suis%20int%C3%A9ress%C3%A9%20par%20vos%20services" 
+                           class="whatsapp-button" target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>TMB SERVICE</h3>
+                    <p>Votre partenaire de confiance pour tous vos services professionnels en Afrique.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Accueil</a></li>
+                        <li><a href="{% url 'services' %}">Services</a></li>
+                        <li><a href="{% url 'galerie' %}">Galerie</a></li>
+                        <li><a href="{% url 'about' %}">À propos</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h4>Nos services</h4>
+                    <ul>
+                        <li>Imprimerie</li>
+                        <li>Photographie</li>
+                        <li>Design graphique</li>
+                        <li>Bureautique</li>
+                        <li>Développement web</li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> +243 848611417</p>
+                    <p><i class="fas fa-envelope"></i> tmbservice@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Kinshasa, RDC</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TMB SERVICE. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Consent -->
+    <div id="cookie-consent" class="cookie-consent">
+        <p>Ce site utilise des cookies pour améliorer votre expérience utilisateur.</p>
+        <div class="cookie-buttons">
+            <button id="accept-cookies" class="btn-cookie accept">Accepter</button>
+            <button id="decline-cookies" class="btn-cookie decline">Refuser</button>
+        </div>
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
